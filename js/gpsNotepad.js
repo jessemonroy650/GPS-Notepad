@@ -2,7 +2,7 @@
 //	Update views only
 //	NOTE: not using JQuery so this section remains neutral & portable
 var GPSView = {
-	gVersion : '0.8',
+	gVersion : '0.9',
 	gMyName  : 'GPS Notepad',
     gWatchHooks : {'details':'gpsDetails', 'latlong':'latLong', 'counter':'counter', 'notepad':'gpsNotepad'},
     gDebugIt : 1,
@@ -75,7 +75,7 @@ var Location = {
 
 // GUI handlers and flags
 var latestGPSCoords = "";
-var minimumAccuracy = 60; // in meters
+var minimumAccuracy = 15; // in meters
 
 // Counters
 var numOfReadings = 0;
@@ -112,7 +112,7 @@ function onSuccess(position) {
 		'Accuracy: '           + position.coords.accuracy              + '<br />' +
 		'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
 		'Heading: '            + position.coords.heading               + '<br />' +
-		'Speed: '              + position.coords.speed                 + '<br />';
+		'Speed: '              + position.coords.speed;
 	GPSView.updateDetails(detail);
 
 	latestGPSCoords = String(position.coords.latitude).substr(0,10) + ',' + 
