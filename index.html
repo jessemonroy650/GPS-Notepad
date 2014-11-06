@@ -16,7 +16,7 @@
 <body onload="onDeviceReady()">
 	<center>
 	<div class=default>
-		<p id='debugger'>Finding geolocation...</p>
+		<p id=gpsDetails>Finding geolocation...</p>
 	</div>
 	<div class='wrapper_status'>
 		<span id=status>Status</span>
@@ -50,12 +50,13 @@
 		// NOTE: This need to be in the same scope as the EventListener. 
 		//	It canNOT go in a seperate file.
 		var dummyLoader = function() {
-			getLocation();
+			Location.getLocation();
 		}
 		function onDeviceReady() {
 			//window.setTimeout(dummyLoader, initialTimeOut);
 			$("#status").text('Device Ready.');
 			console.log("device ready");
+			Location.init(onSuccess, onError);
 
 			$("#uploadButton").click(function() {
 				$("#status").html('Uploading ...');
@@ -63,13 +64,13 @@
 
 			$("#startButton").click(function() {
 				$("#status").html('Starting ... ');
-				watchLocation();
+				Location.watchLocation();
 				$("#status").html('Running ...  ');
         	});
 
 			$("#stopButton").click(function() {
 				$("#status").html('Stopped ...  ');
-				clearWatch();
+				Location.clearWatch();
     	    });
 		}
 

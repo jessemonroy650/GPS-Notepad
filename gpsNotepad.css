@@ -26,33 +26,3 @@ body {margin:0;padding:0;}
 	padding:0.5em;
 	margin:0.25em 0;
 }
-/*
-#uploadButton {width:40%;border:solid 3px green;min-height:1em;
-	padding:1em;text-align:center;
-	margin:0.5em;
-	font-weight:bold;
-	background-color:#44ee44;
-}
-#startButton {width:30%;border:solid 3px blue;
-	float:left;
-	background-color:#4444ee;
-	min-height:1em;
-	padding:1em;
-	margin:0.25em;
-	padding:1em;
-	text-align:center;
-	font-weight:bold;
-	font-size:large;
-}
-#stopButton {width:30%;border:solid 3px red;
-	float:right;
-	background-color:#ee4444;
-	min-height:1em;
-	padding:1em;
-	margin:0.25em;
-	padding:1em;
-	text-align:center;
-	font-weight:bold;
-	font-size:large;
-}
-*/
