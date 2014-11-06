@@ -60,7 +60,8 @@ var numInMargin   = 0;
 			position.coords.longitude, position.coords.altitude,
 			position.timestamp, position.coords.accuracy));
 
-		latestGPSCoords = position.coords.latitude + ',' + position.coords.longitude;
+		latestGPSCoords = String(position.coords.latitude).substr(0,10) + ',' + 
+                          String(position.coords.longitude).substr(0,10);
 		// Update Document
 		updateLive();
 
@@ -76,12 +77,12 @@ var numInMargin   = 0;
 			obj.innerHTML = '' +
 				'Latitude: '           + position.coords.latitude              + '<br />' +
 				'Longitude: '          + position.coords.longitude             + '<br />' +
+				'Timestamp: '          + position.timestamp                    + '<br />' +
 				'Altitude: '           + position.coords.altitude              + '<br />' +
 				'Accuracy: '           + position.coords.accuracy              + '<br />' +
 				'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
 				'Heading: '            + position.coords.heading               + '<br />' +
-				'Speed: '              + position.coords.speed                 + '<br />' +
-				'Timestamp: '          + position.timestamp          + '<br />';
+				'Speed: '              + position.coords.speed                 + '<br />';
 		}
 		// NOTE: If position.coords.accuracy is less than a predetermined amount, use it.
 		if (position.coords.accuracy < minimumAccuracy) {

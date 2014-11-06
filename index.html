@@ -6,14 +6,42 @@
 	<meta name="viewport" content="width=device-width">
 	<!-- Resource Information -->
 	<link rel="stylesheet" type="text/css" href=gpsNotepad.css>
+	<link rel="stylesheet" type="text/css" href=css/buttons.css>
 	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
 	<script type="text/javascript" src="js/gpsNotepad.js"></script>
 	<script type="text/javascript" >
+	</script>
+  </head>
+<body onload="onDeviceReady()">
+	<center>
+	<div class=default>
+		<p id='debugger'>Finding geolocation...</p>
+	</div>
+	<div class='wrapper_status'>
+		<span id=status>Status</span>
+		<span id=counter style=float:right;></span>
+	</div>
+
+	<div id=runButtons class=defaultOff>
+		<span id=stopButton class="button button-rounded button-caution">Stop</span>
+		<span id=uploadButton class="button button-rounded button-action">Upload Readings</span>
+		<span id=startButton class="button button-rounded button-primary">Start</span>
+	</div>
+	<br style=clear:both;>
+	<div id=mainPanel>
+		<div id=recentReading><span id=latLong>Lat,Long</span></div>
+		<div id=gpsNotepad>GPSNotepad</div>
+		<div id=debug></div>
+	</div>
+	</center>
+
+</body>
+	<script type="text/javascript" >
 		//
 		// Wait for everthing to load
-		//
-		document.addEventListener("deviceready", onDeviceReady, false);
+		// "deviceready" is only available on phonegap
+		//document.addEventListener("deviceready", onDeviceReady, false);
 
 		//
 		// Cordova is ready
@@ -26,47 +54,24 @@
 		}
 		function onDeviceReady() {
 			//window.setTimeout(dummyLoader, initialTimeOut);
+			$("#status").text('Device Ready.');
+			console.log("device ready");
+
+			$("#uploadButton").click(function() {
+				$("#status").html('Uploading ...');
+	        });
+
+			$("#startButton").click(function() {
+				$("#status").html('Starting ... ');
+				watchLocation();
+				$("#status").html('Running ...  ');
+        	});
+
+			$("#stopButton").click(function() {
+				$("#status").html('Stopped ...  ');
+				clearWatch();
+    	    });
 		}
 
-		$('#uploadButton').click(function() {
-			$('#status').html = 'Uploading ...';
-        });
-
-		$('#startButton').click(function() {
-			$('#status').html = 'Starting ... ';
-			watchLocation();
-			$('#status').html = 'Running ...  ';
-        });
-
-		$('#stopButton').click(function() {
-			$('#status').html = 'Stopped ...  ';
-			clearWatch();
-        });
 	</script>
-
-</head>
-<body>
-	<center>
-	<div class=default>
-		<p id='debugger'>Finding geolocation...</p>
-	</div>
-	<div class='status'>
-		<span id=status>Status</span>
-		<span id=counter style=float:right;></span>
-	</div>
-
-	<div id=uploadButton>Upload Readings</div>
-	<div id=runButtons class=defaultOff>
-		<span id=stopButton>Stop</span>
-		<span id=startButton>Start</span>
-	</div>
-	<br style=clear:both;>
-	<div id=mainPanel>
-		<div id=recentReading><span id=latLong>Lat,Long</span></div>
-		<div id=gpsNotepad>GPSNotepad</div>
-		<div id=debug></div>
-	</div>
-	</center>
-
-</body>
 </html>
