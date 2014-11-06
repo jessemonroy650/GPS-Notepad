@@ -1,6 +1,6 @@
 //
-var GPSKeeperVersion = '0.8';
-var myName  = 'GPS Keeper';
+var GPSNotepadVersion = '0.8';
+var myName  = 'GPS Notepad';
 var debugIt = 1;
 
 // Our global object handler

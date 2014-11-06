@@ -28,50 +28,20 @@
 			//window.setTimeout(dummyLoader, initialTimeOut);
 		}
 
+		$('#uploadButton').click(function() {
+			$('#status').html = 'Uploading ...';
+        });
 
-		function handleUpload() {
-			blockUI = 1;
-			if (collectRunning) {
-				handleStopB();
-			}
-    	   	document.getElementById('status').innerHTML = 'Uploading ...';
-			//
-			//
-			//gpsUpload(ourCallBackFunc, ourErrorFunc, OurServer, OurUser, GPSKeeperStack);
-		}
+		$('#startButton').click(function() {
+			$('#status').html = 'Starting ... ';
+			watchLocation();
+			$('#status').html = 'Running ...  ';
+        });
 
-		var ourCallBackFunc = function(){
-			blockUI = 0;
-			//GPSKeeperStack = Array();
-			alert("Data Away.");
-			if (collectRunning) {
-				handleStartB();
-			}
-		}
-
-		var ourErrorFunc = function(){
-			alert("We got an error!");
-			if (collectRunning) {
-				handleStartB();
-			}
-		}
-
-		function handleStartB() {
-			if ( ! blockUI ){
-				collectRunning = 1;
-		       	document.getElementById('status').innerHTML = 'Starting ...';
-				watchLocation();
-	    	   	document.getElementById('status').innerHTML = 'Running ...';
-			}
-		}
-
-		function handleStopB() {
-			if ( ! blockUI ){
-				collectRunning = 0;
-		       	document.getElementById('status').innerHTML = 'Stopped ...';
-				clearWatch();
-			}
-		}
+		$('#stopButton').click(function() {
+			$('#status').html = 'Stopped ...  ';
+			clearWatch();
+        });
 	</script>
 
 </head>
@@ -85,10 +55,10 @@
 		<span id=counter style=float:right;></span>
 	</div>
 
-	<div id=uploadButton onclick="handleUpload()">Upload Readings</div>
+	<div id=uploadButton>Upload Readings</div>
 	<div id=runButtons class=defaultOff>
-		<span id=stopButton onclick="handleStopB()">Stop</span>
-		<span id=startButton onclick="handleStartB()">Start</span>
+		<span id=stopButton>Stop</span>
+		<span id=startButton>Start</span>
 	</div>
 	<br style=clear:both;>
 	<div id=mainPanel>
