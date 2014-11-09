@@ -7,9 +7,15 @@
 	<!-- Resource Information -->
 	<link rel="stylesheet" type="text/css" href=gpsNotepad.css>
 	<link rel="stylesheet" type="text/css" href=css/buttons.css>
+	<link rel="stylesheet" type="text/css" href=css/sliding-window.css>
+	<link rel="stylesheet" type="text/css" href=messages.css>
+
+	<!-- <script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script> -->
 	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
 	<script type="text/javascript" src="js/gpsNotepad.js"></script>
+	<script type="text/javascript" src="messages.js"></script>
+
 	<script type="text/javascript" >
 	</script>
   </head>
@@ -22,6 +28,13 @@
 			<span id=version></span>
 		</span>
 	</div>
+	<div id=message class="info">
+		units in meter <input name=accuracy_type type=radio value="meter" checked=checked>
+               or feet <input name=accuracy_type type=radio value="feet">
+		<hr width=50% style=margin:0.5em;>
+		details all <input name=details_type type=radio value="all" checked=checked>
+		   or short <input name=details_type type=radio value="short">
+	</div>
 	<div class=default>
 		<div id=gpsDetails>Finding geolocation...</div>
 	</div>
@@ -32,7 +45,7 @@
 
 	<div id=runButtons class=defaultOff>
 		<span id=stopButton class="button button-rounded button-caution">Stop</span>
-		<span id=uploadButton class="button button-rounded button-action">Notepad</span>
+		<span id=notepadButton class="button button-rounded button-action">Notepad</span>
 		<span id=startButton class="button button-rounded button-primary">Start</span>
 	</div>
 	<br style=clear:both;>
@@ -64,24 +77,52 @@
 		$('#status').html("Device Ready.");
 		console.log("device ready");
 		Location.init(onSuccess, onError);
+		// Vibrate one ready.		
+		navigator.vibrate([500, 1000, 500, 1000, 500]);
 
 		$('#app_icon').click(function(){console.log('#app_icon');});
-		$('#menubar').click(function(){console.log('#menubar');});
+		$('#menubar').click(function(){
+			console.log('#menubar');
+			myMessageToggle();
+		});
 
-		$('#uploadButton').click(function() {
-			$('#status').html("Uploading ...");
+		$('#notepadButton').click(function() {
+			$('#status').html("Uploading ...").removeClass().addClass("button-action");
         });
 
 		$('#startButton').click(function() {
-			$('#status').html("Starting ... ");
+			$('#status').html("Starting ... ").removeClass();
 			Location.watchLocation();
-			$('#status').html("Running ...  ");
+			$('#status').html("Running ...  ").addClass("button-primary");
        	});
 
 		$('#stopButton').click(function() {
-			$('#status').html("Stopped ...  ");
+			$('#status').html("Stopped ...  ").removeClass().addClass("button-caution");
 			Location.clearWatch();
    	    });
+
+		$('input[name=details_type]').click(function() {
+			console.log("got input[name=details_type]" + this.getAttribute("value"));
+   	    });
+
+		$('input[name=accuracy_type]').click(function() {
+			console.log("got input[name=accuracy_type]" + this.getAttribute("value"));
+   	    });
+
+accuracy_type
+	}
+	function onServiceError(code) {
+		switch (code) {
+			case PositionError.PERMISSION_DENIED:
+			break;
+			case PositionError.POSITION_UNAVAILABLE:
+				$('#status').html("Location service UNAVAILABLE.").removeClass().addClass("button-highlight");
+			break;
+			case PositionError.TIMEOUT:
+				$('#status').html("Location service timed out.").removeClass().addClass("button-caution");
+			break;
+			default:
+		}
 	}
 
 </script>
