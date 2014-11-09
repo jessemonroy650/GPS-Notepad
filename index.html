@@ -16,8 +16,11 @@
 <body onload="onDeviceReady()">
 	<center>
 	<div id=header class=header>
+		<img id=menubar src=images/3menubars_lightgrey.png>
 		<img id=app_icon src=res/drawable-mdpi/icon.png>
-		<div id=app_title>&nbsp;GPS Notepad <span id=version></span></div>
+		<span id=app_title>GPS Notepad
+			<span id=version></span>
+		</span>
 	</div>
 	<div class=default>
 		<div id=gpsDetails>Finding geolocation...</div>
@@ -29,7 +32,7 @@
 
 	<div id=runButtons class=defaultOff>
 		<span id=stopButton class="button button-rounded button-caution">Stop</span>
-		<span id=uploadButton class="button button-rounded button-action">Upload Readings</span>
+		<span id=uploadButton class="button button-rounded button-action">Notepad</span>
 		<span id=startButton class="button button-rounded button-primary">Start</span>
 	</div>
 	<br style=clear:both;>
@@ -41,42 +44,45 @@
 	</center>
 
 </body>
-	<script type="text/javascript" >
-		//
-		// Wait for everthing to load
-		// "deviceready" is only available on phonegap
-		//document.addEventListener("deviceready", onDeviceReady, false);
+<script type="text/javascript" >
+	//
+	// Wait for everthing to load
+	// "deviceready" is only available on phonegap
+	//document.addEventListener("deviceready", onDeviceReady, false);
 
-		//
-		// Cordova is ready
-		//
-		// NOTE: The initialTimeOut is to wait for the GPS to get a decent reading.
-		// NOTE: This need to be in the same scope as the EventListener. 
-		//	It canNOT go in a seperate file.
-		var dummyLoader = function() {
-			Location.getLocation();
-		}
-		function onDeviceReady() {
-			//window.setTimeout(dummyLoader, initialTimeOut);
-			$("#status").text('Device Ready.');
-			console.log("device ready");
-			Location.init(onSuccess, onError);
+	//
+	// Cordova is ready
+	//
+	// NOTE: The initialTimeOut is to wait for the GPS to get a decent reading.
+	// NOTE: This need to be in the same scope as the EventListener. 
+	//	It canNOT go in a seperate file.
+	var dummyLoader = function() {
+		Location.getLocation();
+	}
+	function onDeviceReady() {
+		//window.setTimeout(dummyLoader, initialTimeOut);
+		$('#status').html("Device Ready.");
+		console.log("device ready");
+		Location.init(onSuccess, onError);
 
-			$("#uploadButton").click(function() {
-				$("#status").html('Uploading ...');
-	        });
+		$('#app_icon').click(function(){console.log('#app_icon');});
+		$('#menubar').click(function(){console.log('#menubar');});
 
-			$("#startButton").click(function() {
-				$("#status").html('Starting ... ');
-				Location.watchLocation();
-				$("#status").html('Running ...  ');
-        	});
+		$('#uploadButton').click(function() {
+			$('#status').html("Uploading ...");
+        });
 
-			$("#stopButton").click(function() {
-				$("#status").html('Stopped ...  ');
-				Location.clearWatch();
-    	    });
-		}
+		$('#startButton').click(function() {
+			$('#status').html("Starting ... ");
+			Location.watchLocation();
+			$('#status').html("Running ...  ");
+       	});
 
-	</script>
+		$('#stopButton').click(function() {
+			$('#status').html("Stopped ...  ");
+			Location.clearWatch();
+   	    });
+	}
+
+</script>
 </html>

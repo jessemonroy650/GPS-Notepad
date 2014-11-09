@@ -1,5 +1,5 @@
 body {margin:0;padding:0;}
-
+* {margin:0;padding:0;}
 .defaultOff {width:90%;}
 .default {width:90%;border:solid 1px black;margin:0;padding:0;}
 .header  {width:100%;margin:0;margin-bottom:0.05em;padding:0;min-height:50px;}
@@ -13,14 +13,17 @@ background: -ms-linear-gradient(top,  #499bea 0%,#207ce5 100%);
 background: linear-gradient(to bottom,  #499bea 0%,#207ce5 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 );
 }
-#app_icon  {border:0;float:left;}
-#app_title {width:auto;margin:0;padding:0.75em;color:white;font-weight:bold;font-size:large;}
+#menubar   {cursor:pointer;border:0;float:right;}
+#app_icon  {cursor:pointer;border:0;float:left;}
+#app_title {cursor:default;display:block;padding:0.75em;padding-left:4em;;color:white;font-weight:bold;font-size:large;}
 #gpsDetails {padding:0.25em 0;background-color:lightblue;}
 #mainPanel {width:80%;border:solid 3px yellow;min-height: 14em;}
 #recentReading {width:80%;border:solid 3px orange;
 	min-height:1em;	padding:0.25em;	font-size:large;}
 .wrapper_status {width:90%;border:solid 1px black;margin:0;padding:0;}
+#status {}
+#counter {float:right;}
 #latLong {color:blue;text-align:center;font-weight:bold;}
-#uploadButton {padding:0.5em;	margin:0.25em 0;}
-#startButton {float:left;padding:0.5em;margin:0.25em 0;}
-#stopButton  {float:right;padding:0.5em;margin:0.25em 0;}
+#uploadButton {cursor:pointer;padding:0.5em;	margin:0.25em 0;}
+#startButton  {float:left;cursor:pointer;padding:0.5em;margin:0.25em 0;}
+#stopButton   {float:right;cursor:pointer;padding:0.5em;margin:0.25em 0;}

@@ -7,18 +7,16 @@
         versionCode = "10" >
 
         <!-- versionCode is optional and Android only -->
-
         <preference name="phonegap-version" value="3.5.0" />
 
         <name>GPS Notepad</name>
-
         <description>
         A simple GPS App for taking notes.
         </description>
-
         <author href="http://bsdmasterindex.com" email="jessemonroy650@yahoo.com">
         Jesse Monroy
         </author>
+
         <gap:platform name="android" />
 
         <icon src="res/drawable-mdpi/icon.png" gap:platform="android" gap:qualifier="mdpi" />
