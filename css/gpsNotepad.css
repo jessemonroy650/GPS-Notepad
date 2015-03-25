@@ -24,6 +24,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', end
 #status {width:70%;display:inline-block;}
 #counter {float:right;}
 #latLong {color:blue;text-align:center;font-weight:bold;}
-#uploadButton {cursor:pointer;padding:0.5em;	margin:0.25em 0;}
+#editpaste {float:right;}
+#uploadButton {cursor:pointer;padding:0.5em;margin:0.25em 0;}
 #startButton  {float:left;cursor:pointer;padding:0.5em;margin:0.25em 0;}
 #stopButton   {float:right;cursor:pointer;padding:0.5em;margin:0.25em 0;}

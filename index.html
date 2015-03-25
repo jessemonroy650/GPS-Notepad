@@ -5,16 +5,21 @@
 	<title>GPS Notepad</title>
 	<meta name="viewport" content="width=device-width">
 	<!-- Resource Information -->
-	<link rel="stylesheet" type="text/css" href=gpsNotepad.css>
 	<link rel="stylesheet" type="text/css" href=css/buttons.css>
+	<link rel="stylesheet" type="text/css" href=css/gpsNotepad.css>
 	<link rel="stylesheet" type="text/css" href=css/sliding-window.css>
-	<link rel="stylesheet" type="text/css" href=messages.css>
+	<link rel="stylesheet" type="text/css" href=css/messages.css>
+	<!-- <link rel="stylesheet" type="text/css" href=css/config.css> -->
 
-	<!-- <script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script> -->
-	<script type="text/javascript" src="cordova.js"></script>
+    <!-- message.js toggles a "growl" and is tied to config.css & login.css -->
+	<script type="text/javascript" src="js/messages.js"></script>
+    <script type="text/javascript" src='js/firebase-2.0.5.js'></script>
 	<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
 	<script type="text/javascript" src="js/gpsNotepad.js"></script>
-	<script type="text/javascript" src="messages.js"></script>
+	<script type="text/javascript" src="gpsNotepad-firebase.js"></script>
+	<script type="text/javascript" src="gpsNotepad-firebase-user.js"></script>
+	<script type="text/javascript" src="gpsNotepad-firebase-anon.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
 
 	<script type="text/javascript" >
 	</script>
@@ -28,12 +33,20 @@
 			<span id=version></span>
 		</span>
 	</div>
-	<div id=message class="info">
+	<div id=config class="config">
 		units in meter <input name=accuracy_type type=radio value="meter" checked=checked>
                or feet <input name=accuracy_type type=radio value="feet">
-		<hr width=50% style=margin:0.5em;>
+		<hr style=width:50%;margin:0.5em;>
 		details all <input name=details_type type=radio value="all" checked=checked>
 		   or short <input name=details_type type=radio value="short">
+		<hr style=width:50%;margin:0.5em;>
+		accuracy <input id=accuracyNumber type=text size=1>
+	</div>
+	<div id=login class="login">
+		<h2>Login</h2>
+		<input type=text id=email placeholder=email><br>
+		<input type=text id=password placeholder=password><br>
+		<button type=button id=loginButton>Login</button>
 	</div>
 	<div class=default>
 		<div id=gpsDetails>Finding geolocation...</div>
@@ -50,7 +63,10 @@
 	</div>
 	<br style=clear:both;>
 	<div id=mainPanel>
-		<div id=recentReading><span id=latLong>Lat,Long</span></div>
+		<div id=recentReading>
+			<span id=latLong>Lat,Long</span>
+			<img id=copypaste src=images/editpaste_24x24.png/>
+		</div>
 		<div id=gpsNotepad>GPSNotepad</div>
 		<div id=debug></div>
 	</div>
@@ -76,16 +92,29 @@
 		//window.setTimeout(dummyLoader, initialTimeOut);
 		$('#status').html("Device Ready.");
 		console.log("device ready");
-		Location.init(onSuccess, onError);
-		// Vibrate one ready.		
+		Location.init(GPSonSuccess, GPSonError);
+		// Vibrate on ready.		
 		navigator.vibrate([500, 1000, 500, 1000, 500]);
 
-		$('#app_icon').click(function(){console.log('#app_icon');});
+		$('#app_icon').click(function(){
+			console.log('#app_icon');
+			myMessage.Toggle('login');
+		});
+		//
+		//	Toggle the configuration screen & update the values
+		//
 		$('#menubar').click(function(){
 			console.log('#menubar');
-			myMessageToggle();
+			// http://stackoverflow.com/questions/5665915/how-to-check-a-radio-button-with-jquery
+			$('input[name=details_type][value=' + typeDetails + ']').prop('checked', 'checked');
+			$('input[name=accuracy_type][value=' + typeAccuracy + ']').prop('checked', 'checked');
+			$('#accuracyNumber').val(minimumAccuracy);
+			myMessage.Toggle('config');
 		});
 
+		//
+		//	Start, Stop, Upload, Singleshot reading
+		//
 		$('#notepadButton').click(function() {
 			$('#status').html("Uploading ...").removeClass().addClass("button-action");
         });
@@ -101,13 +130,28 @@
 			Location.clearWatch();
    	    });
 
+		//
+		$('#copypaste').click(function() {
+			console.log("got #copypaste:" + GPSKeeperLastReading);
+		});
+
+		//
+		//	Save the configuration values
+		//
 		$('input[name=details_type]').click(function() {
 			console.log("got input[name=details_type]" + this.getAttribute("value"));
+			typeDetails = this.getAttribute("value");
    	    });
 
 		$('input[name=accuracy_type]').click(function() {
 			console.log("got input[name=accuracy_type]" + this.getAttribute("value"));
+			typeAccuracy = this.getAttribute("value");
    	    });
+
+        $('#accuracyNumber').change(function() {
+			//console.log($('#accuracyNumber').val());
+			minimumAccuracy = $('#accuracyNumber').val(); // this.val();
+		});
 	}
 
 	function onServiceError(code) {

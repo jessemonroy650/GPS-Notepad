@@ -1,0 +1,56 @@
+/* From:
+	http://www.red-team-design.com/cool-notification-messages-with-css3-jquery
+*/
+#message {
+	display:none;
+	visibility:collapse;
+	height:7em;
+	padding:0.1em;
+	margin:0;
+	/* below borrowed idea */
+	border: 3px solid;
+	text-shadow: 0 1px 0 rgba(0,0,0,.5);
+}
+/*
+#message.info {background-color:lightgreen;}
+*/
+#message.info {background-color: #4ea5cd; border-color: #3b8eb5;}
+#message.success {background-color: #61b832;border-color: #55a12c;}
+#message.error {background-color: #de4343; border-color: #c43d3d;}
+#message.warning {background-color: #eaaf51;border-color: #d99a36;}
+
+#config {
+	display:none;
+	visibility:collapse;
+	height:7em;
+	padding:0.1em;
+	margin:0;
+	/* below borrowed idea */
+	border: 3px solid;
+	text-shadow: 0 1px 0 rgba(0,0,0,.5);
+}
+#config.config {background-color: #4ea5cd; border-color: #3b8eb5;}
+
+#login {
+	display:none;
+	visibility:collapse;
+	height:7em;
+	padding:0.1em;
+	margin:0;
+	/* below borrowed idea */
+	border: 3px solid;
+	text-shadow: 0 1px 0 rgba(0,0,0,.5);
+}
+#login.login {background-color: #61b832;border-color: #55a12c;}
+
+#register {
+	display:none;
+	visibility:collapse;
+	height:7em;
+	padding:0.1em;
+	margin:0;
+	/* below borrowed idea */
+	border: 3px solid;
+	text-shadow: 0 1px 0 rgba(0,0,0,.5);
+}
+#register.register {background-color: #eaaf51;border-color: #d99a36;}
