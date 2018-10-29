@@ -15,7 +15,8 @@ var app = {
     isCordovaApp   : 'false',
     isCameraAvailable : false,
     isStorageAvailable : false,
-    optionStates : {units:'', details:'', accuracy:'', }, 
+    optionStates       : {units:'', details:'', accuracy:'', },
+    GPSNotepadNote     : null,
 
     // GPSView.gTriggerSnapshot when triggered (true), the callback `gpsNoteCallback` receives the current GPS reading.
 
@@ -35,6 +36,12 @@ var app = {
         $('#noteAccuracy').text(theData.Accuracy);
         $('#noteEpochTime').text(theData.Timestamp);
         $('#noteClockTime').text(n);
+
+        theData.ClockTime  = n;        // add human readable time field
+        //
+        //  Save data for local storage.
+        // 
+        app.GPSNotepadNote = theData;
     },
     //
     cameraCallback : function (imageData) {
@@ -42,7 +49,12 @@ var app = {
 
         var image = document.getElementById('theImage');
         image.src = "data:image/jpeg;base64," + imageData;
+        //
+        //  Save imageData for local storage.
+        // 
+        app.GPSNotepadNote.Base64Image = imageData;
     },
+
     //
     //  Initialize our screen, and all libraries we used.
     //
@@ -52,7 +64,7 @@ var app = {
         //  `GPSView` mainly deals with the all call back from `Location`
         //
         GPSView.gTriggerSnapshot = false;
-        GPSView.registerCallback(app.gpsNoteCallback);   
+        GPSView.registerTriggeredCallback(app.gpsNoteCallback);   
         //
         //  essentially a wrapper to geolocation
         //
@@ -154,12 +166,10 @@ var app = {
         app.init();
         app.hook();
         //app.onDeviceReady();
-        $('#debug').text("app.onDOMContentLoaded()");
     },
     //
     onDeviceReady : function () {
         console.log("app.onDeviceReady()");
-        $('#debug').text("app.onDeviceReady()");
 		//window.setTimeout(dummyLoader, initialTimeOut);
 		$('#status').text("Device Ready.");
         // - https://videlais.com/2014/08/21/lessons-learned-from-detecting-apache-cordova/
@@ -170,7 +180,6 @@ var app = {
             navigator.vibrate(app.vibratePattern);
         }
         app.isCameraAvailable = cameraPlugin.isCameraAvailable();
-        $('#debug').text('app.isCameraAvailable ' + app.isCameraAvailable);
         if (app.isCameraAvailable) {
             cameraPlugin.init(app.cameraCallback);
             $('#imgCamera').removeClass().addClass('expose');

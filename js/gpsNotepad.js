@@ -12,8 +12,11 @@ var GPSKeeperStack       = [];
 //	Wrapper Functions
 //
 var GPSwrapData = function (lat, long, alt, ts, acc) {
-	var wrapper = {'latitude': lat, 'longitude': long, 'altitude': alt, 'timestamp': ts, 'accuracy': acc };
-	return wrapper;
+	return {'latitude': lat, 'longitude': long, 'altitude': alt, 'timestamp': ts, 'accuracy': acc };
+}
+// no altitude information
+var GPSwrapGPSNote = function (ts, lat, lon, acc) {
+    return  {Timestamp: ts, Latitude: lat, Longitude: lon, Accuracy: acc};
 }
 
 //
@@ -24,8 +27,9 @@ var GPSView = {
 	gMyName  : 'GPS Notepad',
     gWatchHooks : GPSViewHooks,
     gDebugIt    : 1,
-    gCallback   : null,
-    gTriggerSnapshot : false,    // when triggered (true), callback the current reading to your parent
+    gTriggeredCallback  : null,
+    gTriggerSnapshot    : false,    // when triggered (true), callback the current reading to your parent
+    gRollingLogCallback : null,
 
     // GUI handlers and flags
     minimumAccuracy : 15,      // in meters
@@ -43,8 +47,8 @@ var GPSView = {
 	// Our global object handler
 	obj : {},
 
-    registerCallback : function (theCallback) {
-        GPSView.gCallback = theCallback;
+    registerTriggeredCallback : function (theCallback) {
+        GPSView.gTriggeredCallback = theCallback;
     },
     //
 	updateDetails : function (details) {
@@ -105,7 +109,6 @@ var GPSView = {
                                   String(position.coords.longitude).substr(0,10);
         gpslongCords            = String(position.coords.latitude) + ',' + 
                                   String(position.coords.longitude);
-        //GPSView.GPSKeeperLastReading = gpslongCords;
 
         // Update Document
         GPSView.updateLive(GPSView.GPSlatestCoords);
@@ -113,21 +116,23 @@ var GPSView = {
         if (position.coords.accuracy < GPSView.minimumAccuracy) {
             GPSView.numInMargin          = GPSView.numInMargin + 1;
             GPSView.GPSKeeperLastReading = gpslongCords;
-            GPSView.updateGPSNotepad(GPSView.GPSlatestCoords);
-            // Save for GPX format
-            // Extra Information to assist in Analysis (position.coords.accuracy)
-            GPSKeeperStack.push(GPSwrapData(position.coords.latitude,
-			    position.coords.longitude, position.coords.altitude,
-                position.timestamp, position.coords.accuracy));
+            if (GPSView.gRollingLogCallback) {
+                GPSView.updateGPSNotepad(GPSView.GPSlatestCoords);
+                // Save for GPX format
+                // Extra Information to assist in Analysis (position.coords.accuracy)
+                GPSKeeperStack.push(GPSwrapData(position.coords.latitude,
+			        position.coords.longitude, position.coords.altitude,
+                    position.timestamp, position.coords.accuracy));
+            }
         }
         // Update Document
         GPSView.updateCounter(GPSView.numInMargin + "/" + GPSView.numOfReadings);
         
         if (GPSView.gTriggerSnapshot) {
-            GPSView.gCallback({Timestamp: position.timestamp,
-                               Latitude:  position.coords.latitude,
-                               Longitude: position.coords.longitude,
-                               Accuracy:  position.coords.accuracy});
+            GPSView.gTriggeredCallback(GPSwrapGPSNote(position.timestamp,
+                                                      position.coords.latitude,
+                                                      position.coords.longitude,
+                                                      position.coords.accuracy));
         }
     },
     //

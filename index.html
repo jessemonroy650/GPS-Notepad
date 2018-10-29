@@ -57,7 +57,7 @@
 		<span id=stopButton class="button button-rounded button-caution">Stop</span>
 		<span id=startButton class="button button-rounded button-primary">Start</span>
 		<span id=notepadButton class="button button-rounded button-action">Notepad</span><br>
-		<span id=cameraButton class="button button-rounded button-royal hidden">Camera</span>
+		<span id=cameraButton class="button button-rounded button-royal">Camera</span>
 	</div>
 	<br style=clear:both;>
 	<div id=mainPanel>
@@ -73,16 +73,16 @@
             <div><b>Timestamp</b> <span id=noteEpochTime>epochTime</span></div>
             <div><b>Date, Time</b> <span id=noteClockTime>clockTime</span></div>
             <div id="noteWrapper">
-                <textarea id=noteNote placeholder="Write your notes here" maxlength=280 cols=35 rows=8 autofocus></textarea>
+                <textarea id=noteNote placeholder="Write your notes here" maxlength=280 cols=30 rows=9 autofocus></textarea>
                 <div id=charCount><span id=usedCharacters></span> count</div>
             </div>
         </div>
-        <img title="localstorage available" class=hidden id="imgLocalStore" src=images/storage.png>
-        <img title="camera available" class=hidden id="imgCamera" src=images/camera.png>
+        <img title="localstorage available" id="imgLocalStore" src=images/storage.png>
+        <img title="camera available" id="imgCamera" src=images/camera.png>
 	</div>
     <img id=theImage>
 	</center>
-    <div id=debug>abc</div>
+    <div id=debug></div>
 </body>
 <script type="text/javascript" >
     //
