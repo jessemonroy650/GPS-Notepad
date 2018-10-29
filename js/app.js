@@ -154,10 +154,12 @@ var app = {
         app.init();
         app.hook();
         //app.onDeviceReady();
+        $('#debug').text("app.onDOMContentLoaded()");
     },
     //
     onDeviceReady : function () {
         console.log("app.onDeviceReady()");
+        $('#debug').text("app.onDeviceReady()");
 		//window.setTimeout(dummyLoader, initialTimeOut);
 		$('#status').text("Device Ready.");
         // - https://videlais.com/2014/08/21/lessons-learned-from-detecting-apache-cordova/
