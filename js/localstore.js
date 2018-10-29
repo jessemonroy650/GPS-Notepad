@@ -1,6 +1,9 @@
 /*
     Date: 2016-03-06
           2016-03-07 - Added update()
+          2018-10-29 - Link
+
+    https://developer.mozilla.org/en-US/docs/Web/API/Storage
 */
 
 var localStore = {

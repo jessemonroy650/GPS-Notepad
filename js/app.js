@@ -88,9 +88,21 @@ var app = {
         //
         //  In the future, login to online storage
         //
+/*
+        $('#app_icon').click(function(){
+        //     console.log('#app_icon');
+            myMessage.Toggle('login');
+        });
+*/
 		$('#app_icon').click(function(){
-			console.log('#app_icon');
-			//myMessage.Toggle('login');
+			console.log('#dataStore');
+            myMessage.Toggle('dataStore');
+            var len  = localStore.len();
+            var junk = "length: " + len + "<br>";
+            for (var i = 0; i < len; i++) {
+                junk = junk + "<br>index: " + i + " / key: " + localStore.key(i) + "<br>" + localStore.get(localStore.key(i));
+            }
+            $('#dataRecords').html(junk);
 		});
 		//
 		//	Toggle the configuration screen & update the values
@@ -104,21 +116,14 @@ var app = {
 			myMessage.Toggle('config');
 		});
 		//
-		//	Start, Stop, Upload, Singleshot reading
+		//	Snapshot
 		//
-		$('#notepadButton').click(function() {
+		$('#snapshotButton').click(function() {
             // Set the trigger to take the next available snapshot.
             GPSView.gTriggerSnapshot = true;
 			$('#status').text("Getting snapshot ...").removeClass().addClass("button-action");
             $('#gpsNote').removeClass();
         });
-
-		$('#cameraButton').click(function() {
-            $('#status').text("Getting Camera ... ");
-            // use a short timeout, text does not display
-            setTimeout(cameraPlugin.getPicture, 200);
-        });
-
         //
         //  Save the GPSnote
         //
@@ -128,16 +133,28 @@ var app = {
             // clean up the interface
 			$('#status').text("Status").removeClass();
             $('#gpsNote').removeClass().addClass("hidden");
+            $('#theImage').src = '';
             //
             //
             //
             localStore.put(JSON.stringify(app.GPSNotepadNote.Timestamp), JSON.stringify(app.GPSNotepadNote));
-            $('#debug').html(JSON.stringify(app.GPSNotepadNote.Timestamp) +
-                             '<br>' + 
-                             JSON.stringify(app.GPSNotepadNote)
-                            );
+            // $('#debug').html(JSON.stringify(app.GPSNotepadNote.Timestamp) + '<br>' + JSON.stringify(app.GPSNotepadNote));
+            // Reset the rolling GPS pane
+            $('#gpsDetails').html('Finding geolocation...');
+            $('#status').text("Saved").addClass("button-highlight");
         });
-
+        //
+        //  Clear localStorage -- COMPLETELY REMOVE ALL DATA
+        //
+		$('#clearDataButton').click(function() {
+            //console.log('#clearDataButton');
+            localStore.clear();
+            // Clear the current data record we trapped
+            $('#dataRecords').html('');
+        });
+		//
+		//	Start, Stop, copy/paste
+		//
 		$('#startButton').click(function() {
             // just in case, reset the trigger
             GPSView.gTriggerSnapshot = false;
@@ -150,11 +167,17 @@ var app = {
 			$('#status').text("Stopped ...  ").removeClass().addClass("button-caution");
 			Location.clearWatch();
    	    });
-
 		//
 		$('#copypaste').click(function() {
 			console.log("got #copypaste:" + GPSView.GPSKeeperLastReading);
 		});
+        //
+		$('#cameraButton').click(function() {
+            $('#status').text("Getting Camera ... ");
+            // use a short timeout, text does not display
+            setTimeout(cameraPlugin.getPicture, 200);
+        });
+
 
 		//
 		//	Save the configuration values

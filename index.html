@@ -30,7 +30,7 @@
 			v<span id=version></span>
 		</span>
 	</div>
-	<div id=config class="config">
+	<div id=config class=config >
 		units in meter <input name=accuracy_type type=radio value="meter" checked=checked>
                or feet <input name=accuracy_type type=radio value="feet">
 		<hr style=width:50%;margin:0.5em;>
@@ -39,11 +39,16 @@
 		<hr style=width:50%;margin:0.5em;>
 		accuracy <input id=accuracyNumber type=text size=1>
 	</div>
-	<div id=login class="login">
+	<div id=login class=login >
 		<h2>Login</h2>
 		<input type=text id=email placeholder=email><br>
 		<input type=text id=password placeholder=password><br>
 		<button type=button id=loginButton>Login</button>
+	</div>
+	<div id=dataStore class=dataStore >
+		<h2>DataStore</h2>
+        <span id=dataRecords></span>
+        <span id=clearDataButton class="button button-rounded button-highlight">Clear Storage</span>
 	</div>
 	<div class=default>
 		<div id=gpsDetails>Finding geolocation...</div>
@@ -56,7 +61,7 @@
 	<div id=runButtons class=defaultOff>
         <span id=stopButton class="button button-rounded button-caution">Stop</span>
         <span id=startButton class="button button-rounded button-primary">Start</span>
-        <span id=notepadButton class="button button-rounded button-action">Notepad</span><br>
+        <span id=snapshotButton class="button button-rounded button-action">Snapshot</span><br>
         <span id=cameraButton class="button button-rounded button-royal">Camera</span>
 	</div>
 	<div id=mainPanel>

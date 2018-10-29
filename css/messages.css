@@ -43,6 +43,19 @@
 }
 #login.login {background-color: #61b832;border-color: #55a12c;}
 
+#dataStore {
+	display:none;
+	visibility:collapse;
+	height:20em;
+	padding:0.1em;
+	margin:0;
+	/* below borrowed idea */
+	border: 3px solid;
+	text-shadow: 0 1px 0 rgba(0,0,0,.5);
+}
+
+#dataStore.dataStore {background-color: #61b832;border-color: #55a12c;}
+
 #register {
 	display:none;
 	visibility:collapse;

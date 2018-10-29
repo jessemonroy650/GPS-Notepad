@@ -20,5 +20,7 @@ A simple GPS App that allows you to make notes on any GPS location you reach. At
 * https://www.npmjs.com/package/cordova-plugin-vibration
 
 
+## Web API used
 
+* https://developer.mozilla.org/en-US/docs/Web/API/Storage (localStore)
 
