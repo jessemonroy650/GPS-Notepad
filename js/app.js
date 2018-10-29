@@ -74,9 +74,9 @@ var app = {
         //
         app.isStorageAvailable = localStore.isStorageAvailable('localStorage');
         if (app.isStorageAvailable) {
-            $('#imgLocalStore').removeClass().addClass('expose');
+            $('#imgLocalStore').removeClass('hidden').addClass('expose');
         } else {
-            $('#imgLocalStore').removeClass().addClass('hidden');
+            $('#imgLocalStore').removeClass('expose').addClass('hidden');
         }
     },
     //
@@ -182,11 +182,11 @@ var app = {
         app.isCameraAvailable = cameraPlugin.isCameraAvailable();
         if (app.isCameraAvailable) {
             cameraPlugin.init(app.cameraCallback);
-            $('#imgCamera').removeClass().addClass('expose');
-            $('#cameraButton').removeClass().addClass('expose');
+            $('#imgCamera').removeClass('hidden').addClass('expose');
+            $('#cameraButton').removeClass('hidden').addClass('expose');
         } else {
-            $('#imgCamera').removeClass().addClass('hidden');
-            $('#cameraButton').removeClass().addClass('hidden');
+            $('#imgCamera').removeClass('expose').addClass('hidden');
+            $('#cameraButton').removeClass('expose').addClass('hidden');
         }
 
     }
