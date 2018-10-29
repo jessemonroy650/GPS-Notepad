@@ -128,20 +128,27 @@ var app = {
         //  Save the GPSnote
         //
 		$('#saveButton').click(function() {
+            // Save the user Note
+            app.GPSNotepadNote.UserNote = $('#noteNote').val();
             // Set the trigger to take the next available snapshot.
             GPSView.gTriggerSnapshot = false;
             // clean up the interface
 			$('#status').text("Status").removeClass();
-            $('#gpsNote').removeClass().addClass("hidden");
+            // remove the image
             $('#theImage').src = '';
+            // Reset the rolling GPS pane
+            $('#gpsDetails').html('Finding geolocation...');
+            // Clear the user NOTE field
+            $('#noteNote').val('');
             //
-            //
+            //  SAVE THE GPS READING to the localStorage
             //
             localStore.put(JSON.stringify(app.GPSNotepadNote.Timestamp), JSON.stringify(app.GPSNotepadNote));
             // $('#debug').html(JSON.stringify(app.GPSNotepadNote.Timestamp) + '<br>' + JSON.stringify(app.GPSNotepadNote));
-            // Reset the rolling GPS pane
-            $('#gpsDetails').html('Finding geolocation...');
-            $('#status').text("Saved").addClass("button-highlight");
+            //  hide our data pane.
+            $('#gpsNote').removeClass().addClass("hidden");
+            //  Mark the data save on the screen
+            $('#status').text("Saved").addClass("button-caution");
         });
         //
         //  Clear localStorage -- COMPLETELY REMOVE ALL DATA
