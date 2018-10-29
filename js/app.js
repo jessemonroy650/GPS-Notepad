@@ -168,11 +168,14 @@ var app = {
             navigator.vibrate(app.vibratePattern);
         }
         app.isCameraAvailable = cameraPlugin.isCameraAvailable();
+        $('#debug').text('app.isCameraAvailable ' + app.isCameraAvailable);
         if (app.isCameraAvailable) {
             cameraPlugin.init(app.cameraCallback);
             $('#imgCamera').removeClass().addClass('expose');
+            $('#cameraButton').removeClass().addClass('expose');
         } else {
             $('#imgCamera').removeClass().addClass('hidden');
+            $('#cameraButton').removeClass().addClass('hidden');
         }
 
     }
@@ -194,4 +197,3 @@ function onServiceError(code) {
         default:
     }
 };
-
