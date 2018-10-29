@@ -11,10 +11,10 @@ body {margin:0;padding:0;}
 #header  {text-align:left;background: #499bea;background: linear-gradient(to bottom,  #499bea 0%,#207ce5 100%);}
 #menubar   {cursor:pointer;border:0;float:right;}
 #app_icon  {cursor:pointer;border:0;float:left;}
+
 #imgCamera {float:right;height:16px;width:16px;padding:0.1em 0.5em;}
 #imgLocalStore {float:right;height:16px;width:16px;padding:0.1em 0.5em;}
 #app_title {cursor:default;display:block;padding:0.75em;padding-left:4em;color:white;font-weight:bold;font-size:large;}
-
 #gpsDetails {padding:0.25em 0;background-color:lightblue;}
 #mainPanel {width:80%;border:solid 3px yellow;min-height: 14em;}
 #recentReading {width:80%;border:solid 3px orange;
@@ -25,10 +25,10 @@ body {margin:0;padding:0;}
 #latLong {color:blue;text-align:center;font-weight:bold;}
 
 /* Buttons */
-#editpaste {cursor:pointer;float:right;}
+#copypaste {cursor:pointer;float:right;}
 /* #uploadButton {cursor:pointer;padding:0.5em;margin:0.25em 0;} */
-#startButton  {cursor:pointer;float:left;padding:0.5em;margin:0.25em 0;}
-#notepadButton {cursor:pointer;}
+#startButton {cursor:pointer;float:left;padding:0.5em;margin:0.25em 0;}
+#notepadButton {cursor:pointer;margin:0.25em 0;}
 #stopButton   {cursor:pointer;float:right;padding:0.5em;margin:0.25em 0;}
 #cameraButton {cursor:pointer;margin:0.25em 0;}
 
