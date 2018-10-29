@@ -170,7 +170,11 @@ var app = {
         app.isCameraAvailable = cameraPlugin.isCameraAvailable();
         if (app.isCameraAvailable) {
             cameraPlugin.init(app.cameraCallback);
+            $('#imgCamera').removeClass().addClass('expose');
+        } else {
+            $('#imgCamera').removeClass().addClass('hidden');
         }
+
     }
 
 };
