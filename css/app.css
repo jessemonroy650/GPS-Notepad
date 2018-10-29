@@ -1,0 +1,42 @@
+body {margin:0;padding:0;}
+* {margin:0;padding:0;}
+.height100percent {height:100%}
+.hidden {visibility:collapse;display:none;}
+.expose {visibility:visible;display:block;} /* Here for completeness only. */
+.defaultOff {width:90%;}
+.default {width:90%;border:solid 1px black;margin:0;padding:0;}
+
+/* header, panel buttons, titles, icons */
+.header  {width:100%;margin:0;margin-bottom:0.05em;padding:0;min-height:50px;}
+#header  {text-align:left;background: #499bea;background: linear-gradient(to bottom,  #499bea 0%,#207ce5 100%);}
+#menubar   {cursor:pointer;border:0;float:right;}
+#app_icon  {cursor:pointer;border:0;float:left;}
+#imgCamera {float:right;height:16px;width:16px;padding:0.1em 0.5em;}
+#imgLocalStore {float:right;height:16px;width:16px;padding:0.1em 0.5em;}
+#app_title {cursor:default;display:block;padding:0.75em;padding-left:4em;color:white;font-weight:bold;font-size:large;}
+
+#gpsDetails {padding:0.25em 0;background-color:lightblue;}
+#mainPanel {width:80%;border:solid 3px yellow;min-height: 14em;}
+#recentReading {width:80%;border:solid 3px orange;
+	min-height:1em;	padding:0.25em;	font-size:large;}
+.wrapper_status {width:90%;border:solid 1px black;margin:0;padding:0;}
+#status {width:70%;display:inline-block;}
+#counter {float:right;}
+#latLong {color:blue;text-align:center;font-weight:bold;}
+
+/* Buttons */
+#editpaste {cursor:pointer;float:right;}
+/* #uploadButton {cursor:pointer;padding:0.5em;margin:0.25em 0;} */
+#startButton  {cursor:pointer;float:left;padding:0.5em;margin:0.25em 0;}
+#notepadButton {cursor:pointer;}
+#stopButton   {cursor:pointer;float:right;padding:0.5em;margin:0.25em 0;}
+#cameraButton {cursor:pointer;margin:0.25em 0;}
+
+/* GPS Note */
+#gpsNotepad {font-family:monospace;weight:bold;font-size:2em;}
+#noteWrapper {border:1px solid black;margin:0 10%;}
+#noteNote {}
+#charCount {text-align:right;}
+
+/* The image we capture */
+#theImage {margin:0;padding:0;width:320px;}

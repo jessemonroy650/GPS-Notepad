@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
     <widget xmlns = "http://www.w3.org/ns/widgets"
-
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.bsdmasterindex.GPSNotepad"
-        version     = "0.9"
-        versionCode = "10" >
-
+        version     = "1.0.0"
+        android-versionCode = "100" >
         <!-- versionCode is optional and Android only -->
-        <preference name="phonegap-version" value="3.5.0" />
+        <!-- https://build.phonegap.com/current-support -->
+        <preference name="phonegap-version" value="cli-7.1.0" />
 
         <name>GPS Notepad</name>
-        <description>
-        A simple GPS App for taking notes.
-        </description>
-        <author href="http://bsdmasterindex.com" email="jessemonroy650@yahoo.com">
-        Jesse Monroy
-        </author>
+        <description>A simple GPS App for taking notes.</description>
+        <author href="http://bsdmasterindex.com" email="jessemonroy650@yahoo.com">Jesse Monroy</author>
 
-        <gap:platform name="android" />
+        <platform name="android" />
 
         <icon src="res/drawable-mdpi/icon.png" gap:platform="android" gap:qualifier="mdpi" />
         <icon src="res/drawable-hdpi/icon.png" gap:platform="android" gap:qualifier="hdpi" />
@@ -28,8 +23,11 @@
 
         <preference name="permissions" value="none"/>
 
-        <gap:plugin name="org.apache.cordova.geolocation" />
-        <gap:plugin name="org.apache.cordova.network-information" />
-        <gap:plugin name="org.apache.cordova.splashscreen" />
-        <gap:plugin name="org.apache.cordova.vibration" />
+        <plugin name="cordova-plugin-camera" spec="~4.0.3" />
+        <plugin name="cordova-plugin-device" spec="~2.0.2" />
+        <plugin name="cordova-plugin-geolocation" spec="~4.0.1" />
+        <!-- <plugin name="cordova-plugin-network-information" spec="~2.0.1" />
+        <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" /> -->
+        <plugin name="cordova-plugin-vibration" spec="~3.1.0" />
+
     </widget>

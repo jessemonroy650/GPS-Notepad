@@ -6,31 +6,27 @@
 	<meta name="viewport" content="width=device-width">
 	<!-- Resource Information -->
 	<link rel="stylesheet" type="text/css" href=css/buttons.css>
-	<link rel="stylesheet" type="text/css" href=css/gpsNotepad.css>
-	<link rel="stylesheet" type="text/css" href=css/sliding-window.css>
 	<link rel="stylesheet" type="text/css" href=css/messages.css>
-	<!-- <link rel="stylesheet" type="text/css" href=css/config.css> -->
+	<link rel="stylesheet" type="text/css" href=css/app.css>
 
-    <!-- message.js toggles a "growl" and is tied to config.css & login.css -->
-	<script type="text/javascript" src="js/messages.js"></script>
-    <script type="text/javascript" src='js/firebase-2.0.5.js'></script>
-	<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
-	<script type="text/javascript" src="js/gpsNotepad.js"></script>
-	<script type="text/javascript" src="gpsNotepad-firebase.js"></script>
-	<script type="text/javascript" src="gpsNotepad-firebase-user.js"></script>
-	<script type="text/javascript" src="gpsNotepad-firebase-anon.js"></script>
 	<script type="text/javascript" src="cordova.js"></script>
+    <!-- message.js toggles a "growl"-style message -->
+	<script type="text/javascript" src="js/messages.js"></script>
+	<script type="text/javascript" src="js/zepto.js"></script>
+	<script type="text/javascript" src="js/gpsNotepad.js"></script>
+	<script type="text/javascript" src="js/localstore.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
 
 	<script type="text/javascript" >
 	</script>
   </head>
-<body onload="onDeviceReady()">
+<body>
 	<center>
 	<div id=header class=header>
 		<img id=menubar src=images/3menubars_lightgrey.png>
 		<img id=app_icon src=res/drawable-mdpi/icon.png>
 		<span id=app_title>GPS Notepad
-			<span id=version></span>
+			v<span id=version></span>
 		</span>
 	</div>
 	<div id=config class="config">
@@ -58,8 +54,9 @@
 
 	<div id=runButtons class=defaultOff>
 		<span id=stopButton class="button button-rounded button-caution">Stop</span>
-		<span id=notepadButton class="button button-rounded button-action">Notepad</span>
 		<span id=startButton class="button button-rounded button-primary">Start</span>
+		<span id=notepadButton class="button button-rounded button-action">Notepad</span><br>
+		<span id=cameraButton class="button button-rounded button-royal hidden">Camera</span>
 	</div>
 	<br style=clear:both;>
 	<div id=mainPanel>
@@ -68,105 +65,32 @@
 			<img id=copypaste src="images/editpaste_24x24.png" />
 		</div>
 		<div id=gpsNotepad>GPSNotepad</div>
-		<div id=debug></div>
+		<div id=gpsNote class=hidden>
+            <div><b>Latitude</b> <span id=noteLatitude>Latitude</span></div>
+            <div><b>Longitude</b> <span id=noteLongitude>Longitude</span></div>
+            <div><b>Accuracy</b> <span id=noteAccuracy>Accuracy</span></div>
+            <div><b>Timestamp</b> <span id=noteEpochTime>epochTime</span></div>
+            <div><b>Date, Time</b> <span id=noteClockTime>clockTime</span></div>
+            <div id="noteWrapper">
+                <textarea id=noteNote placeholder="Write your notes here" maxlength=280 cols=35 rows=8 autofocus></textarea>
+                <div id=charCount><span id=usedCharacters></span> count</div>
+            </div>
+        </div>
+        <img title="localstorage available" class=hidden id="imgLocalStore" src=images/storage.png>
+        <img title="camera available" class=hidden id="imgCamera" src=images/camera.png>
 	</div>
+    <img id=theImage>
 	</center>
-
+    <div id=debug></div>
 </body>
 <script type="text/javascript" >
-	//
-	// Wait for everthing to load
-	// "deviceready" is only available on phonegap
-	//document.addEventListener("deviceready", onDeviceReady, false);
-
-	//
-	// Cordova is ready
-	//
-	// NOTE: The initialTimeOut is to wait for the GPS to get a decent reading.
-	// NOTE: This need to be in the same scope as the EventListener. 
-	//	It canNOT go in a seperate file.
-	var dummyLoader = function() {
-		Location.getLocation();
-	}
-	function onDeviceReady() {
-		//window.setTimeout(dummyLoader, initialTimeOut);
-		$('#status').html("Device Ready.");
-		console.log("device ready");
-		Location.init(GPSonSuccess, GPSonError);
-		// Vibrate on ready.		
-		navigator.vibrate([500, 1000, 500, 1000, 500]);
-
-		$('#app_icon').click(function(){
-			console.log('#app_icon');
-			myMessage.Toggle('login');
-		});
-		//
-		//	Toggle the configuration screen & update the values
-		//
-		$('#menubar').click(function(){
-			console.log('#menubar');
-			// http://stackoverflow.com/questions/5665915/how-to-check-a-radio-button-with-jquery
-			$('input[name=details_type][value=' + typeDetails + ']').prop('checked', 'checked');
-			$('input[name=accuracy_type][value=' + typeAccuracy + ']').prop('checked', 'checked');
-			$('#accuracyNumber').val(minimumAccuracy);
-			myMessage.Toggle('config');
-		});
-
-		//
-		//	Start, Stop, Upload, Singleshot reading
-		//
-		$('#notepadButton').click(function() {
-			$('#status').html("Uploading ...").removeClass().addClass("button-action");
-        });
-
-		$('#startButton').click(function() {
-			$('#status').html("Starting ... ").removeClass();
-			Location.watchLocation();
-			$('#status').html("Running ...  ").addClass("button-primary");
-       	});
-
-		$('#stopButton').click(function() {
-			$('#status').html("Stopped ...  ").removeClass().addClass("button-caution");
-			Location.clearWatch();
-   	    });
-
-		//
-		$('#copypaste').click(function() {
-			console.log("got #copypaste:" + GPSKeeperLastReading);
-		});
-
-		//
-		//	Save the configuration values
-		//
-		$('input[name=details_type]').click(function() {
-			console.log("got input[name=details_type]" + this.getAttribute("value"));
-			typeDetails = this.getAttribute("value");
-   	    });
-
-		$('input[name=accuracy_type]').click(function() {
-			console.log("got input[name=accuracy_type]" + this.getAttribute("value"));
-			typeAccuracy = this.getAttribute("value");
-   	    });
-
-        $('#accuracyNumber').change(function() {
-			//console.log($('#accuracyNumber').val());
-			minimumAccuracy = $('#accuracyNumber').val(); // this.val();
-		});
-	}
-
-	function onServiceError(code) {
-		switch (code) {
-			case PositionError.PERMISSION_DENIED:
-			break;
-			case PositionError.POSITION_UNAVAILABLE:
-				$('#status').html("Location service UNAVAILABLE.").removeClass().addClass("button-highlight");
-			break;
-			case PositionError.TIMEOUT:
-				$('#status').html("Location service timed out.").removeClass().addClass("button-caution");
-			break;
-			default:
-		}
-	}
-
+    //
+    //   Wait for everthing to load
+    //
+    // The 'DOMContentLoaded' event fires before the 'deviceready'
+    document.addEventListener('DOMContentLoaded', app.onDOMContentLoaded, false);
+    //
+    //  "deviceready" is only available on phonegap
+    //document.addEventListener("deviceready", app.onDeviceReady, false);
 </script>
 </html>
