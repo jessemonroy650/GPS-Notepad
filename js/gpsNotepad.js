@@ -129,6 +129,9 @@ var GPSView = {
         GPSView.updateCounter(GPSView.numInMargin + "/" + GPSView.numOfReadings);
         
         if (GPSView.gTriggerSnapshot) {
+            // RRR This short-circuit is hidden, but is required because sometimes
+            // the stack gets overrun.
+            Location.clearWatch();
             GPSView.gTriggeredCallback(GPSwrapGPSNote(position.timestamp,
                                                       position.coords.latitude,
                                                       position.coords.longitude,

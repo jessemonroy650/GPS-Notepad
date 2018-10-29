@@ -28,7 +28,9 @@ var app = {
 
         n = (new Date(theData.Timestamp)).toLocaleString();
 
+        //
         // update the onscreen display
+        // Sometimes this does not work, so it is short-circuited at `GPSView.gTriggeredCallback()`
         $('#stopButton').click();
         //
         $('#noteLatitude').text(theData.Latitude);
@@ -115,6 +117,25 @@ var app = {
             $('#status').text("Getting Camera ... ");
             // use a short timeout, text does not display
             setTimeout(cameraPlugin.getPicture, 200);
+        });
+
+        //
+        //  Save the GPSnote
+        //
+		$('#saveButton').click(function() {
+            // Set the trigger to take the next available snapshot.
+            GPSView.gTriggerSnapshot = false;
+            // clean up the interface
+			$('#status').text("Status").removeClass();
+            $('#gpsNote').removeClass().addClass("hidden");
+            //
+            //
+            //
+            localStore.put(JSON.stringify(app.GPSNotepadNote.Timestamp), JSON.stringify(app.GPSNotepadNote));
+            $('#debug').html(JSON.stringify(app.GPSNotepadNote.Timestamp) +
+                             '<br>' + 
+                             JSON.stringify(app.GPSNotepadNote)
+                            );
         });
 
 		$('#startButton').click(function() {
