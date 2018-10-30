@@ -83,6 +83,7 @@ var app = {
     },
     //
     //  "hook" deals with the interactive screen, buttons and the such.
+    //   
     //
     hook : function () {
         //
@@ -94,13 +95,18 @@ var app = {
             myMessage.Toggle('login');
         });
 */
+        //  https://developer.mozilla.org/en-US/docs/Web/API/Storage
 		$('#app_icon').click(function(){
 			console.log('#dataStore');
             myMessage.Toggle('dataStore');
             var len  = localStore.len();
             var junk = "length: " + len + "<br>";
             for (var i = 0; i < len; i++) {
-                junk = junk + "<br>index: " + i + " / key: " + localStore.key(i) + "<br>" + localStore.get(localStore.key(i));
+                var x = JSON.parse(localStore.get(localStore.key(i)));
+                //junk = junk + "<br>" + x.ClockTime + "<br>" + "index: " + i + " / " + "key: " + localStore.key(i);
+                junk = junk + "<p class=recordSpace><a href=" + localStore.key(i) +
+                       " id=localStorageKey>" + x.ClockTime + "<br>" +
+                       "(" + localStore.key(i) + ")</a></p>";
             }
             $('#dataRecords').html(junk);
 		});
